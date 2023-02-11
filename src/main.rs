@@ -3,6 +3,7 @@ use bevy::prelude::*;
 fn main() {
     App::new()
         .add_startup_system(add_people)
+        .add_system(greet_people)
         .add_system(hello_world)
         .run();
 }
@@ -18,7 +19,13 @@ struct Person;
 struct Name(String);
 
 fn add_people(mut commands: Commands) {
-    commmands.spawn((Person, Name("Elaina Proctor".to_string())));
-    commmands.spawn((Person, Name("Donald Duck".to_string())));
-    commmands.spawn((Person, Name("Mickey Mouse".to_string())));
+    commands.spawn((Person, Name("Elaina Proctor".to_string())));
+    commands.spawn((Person, Name("Donald Duck".to_string())));
+    commands.spawn((Person, Name("Mickey Mouse".to_string())));
+}
+
+fn greet_people(query: Query<&Name, With<Person>>) {
+    for name in query.iter() {
+        println!("Hello {}!", name.0);
+    }
 }
