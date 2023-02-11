@@ -1,9 +1,9 @@
 [package]
-name = "pong_amethyst"
+name = "pong_bevy"
 version = "0.1.0"
 edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-amethyst = "0.15.3"
+bevy = "0.9.1"
