@@ -9,3 +9,6 @@ fn main() {
 fn hello_world() {
     println!("hello world!");
 }
+
+#[derive(Component)]
+struct Person;
