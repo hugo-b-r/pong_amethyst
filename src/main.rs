@@ -33,7 +33,9 @@ fn spawn_snake(mut commands: Commands) {
         },
         ..default()
     })
-    .insert(SnakeHead);
+    .insert(SnakeHead)
+    .insert(Position { x: 3, y: 3 }) // <--
+    .insert(Size::square(0.8));
 }
 
 fn snake_movement(
