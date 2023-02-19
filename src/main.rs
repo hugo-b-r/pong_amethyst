@@ -55,3 +55,24 @@ fn snake_movement(
         }
     }
 }
+
+#[derive(Component, Clone, Copy, PartialEq, Eq)]
+struct Position {
+    x: i32,
+    y: i32,
+}
+
+#[derive(Component)]
+struct Size{
+    width: f32,
+    height: f32,
+}
+
+impl Size {
+    pub fn Square(x: f32) -> Self {
+        Self {
+            width: x,
+            height: x,
+        }
+    }
+}
