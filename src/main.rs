@@ -1,5 +1,8 @@
 use bevy::prelude::*;
 
+const ARENA_WIDTH: u32 = 10;
+const ARENA_HEIGHT: u32 = 10;
+
 fn main() {
     App::new().add_startup_system(setup_camera)
                 .add_startup_system(spawn_snake)
