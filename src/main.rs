@@ -1,4 +1,6 @@
 use bevy::prelude::*;
+use bevy::time::FixedTimestep;
+use rand::prelude::random;
 
 const ARENA_WIDTH: u32 = 10;
 const ARENA_HEIGHT: u32 = 10;
@@ -14,6 +16,11 @@ fn main() {
                     SystemSet::new()
                         .with_system(position_translation)
                         .with_system(size_scaling),
+                )
+                .add_system_set(
+                    SystemSet::new()
+                        .with_run_criteria(FixedTimestep::step(1.0))
+                        .with_system(food_spawner),
                 )
                 .add_plugins(DefaultPlugins)
                 .run();
@@ -35,7 +42,7 @@ fn setup_camera(mut commands: Commands) {
 struct SnakeHead;
 
 const SNAKE_HEAD_COLOR: Color = Color::rgb(0.7, 0.7, 0.7);
-
+const FOOD_COLOR: Color = Color::rgb(1.0, 0.0, 1.0);
 fn spawn_snake(mut commands: Commands) {
     commands.spawn(SpriteBundle {
         sprite: Sprite {
@@ -118,4 +125,24 @@ fn position_translation(windows: Res<Windows>, mut q: Query<(&Position, &mut Tra
             0.0,
         );
     }
+}
+
+#[derive(Component)]
+struct Food;
+
+fn food_spawner(mut commands: Commands) {
+    commands
+        .spawn(SpriteBundle {
+            sprite: Sprite {
+                color: FOOD_COLOR,
+                ..default()
+            },
+            ..default()
+        })
+        .insert(Food)
+        .insert(Position {
+            x: (random::<f32>() * ARENA_WIDTH as f32) as i32,
+            y: (random::<f32>() * ARENA_HEIGHT as f32) as i32,
+        })
+        .insert(Size::square(0.8));
 }
