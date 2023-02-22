@@ -4,7 +4,9 @@ const ARENA_WIDTH: u32 = 10;
 const ARENA_HEIGHT: u32 = 10;
 
 fn main() {
-    App::new().add_startup_system(setup_camera)
+    App::new().insert_resource(ClearColor(Color::rgb(0.04, 0.04, 0.04)))
+                .add_startup_system(window_size)
+                .add_startup_system(setup_camera)
                 .add_startup_system(spawn_snake)
                 .add_system(snake_movement)
                 .add_system_set_to_stage(
@@ -16,6 +18,13 @@ fn main() {
                 .add_plugins(DefaultPlugins)
                 .run();
         
+}
+
+fn window_size(mut windows: ResMut<Windows>) {
+    let window = windows.get_primary_mut().unwrap();
+
+    window.set_title("Snake".to_owned());
+    window.set_resolution(500., 500.);
 }
 
 fn setup_camera(mut commands: Commands) {
@@ -46,20 +55,20 @@ fn spawn_snake(mut commands: Commands) {
 
 fn snake_movement(
     keyboard_input: Res<Input<KeyCode>>,
-    mut head_positions: Query<&mut Transform, With<SnakeHead>>
+    mut head_positions: Query<&mut Position, With<SnakeHead>>
 ) {
-    for mut transform in head_positions.iter_mut() {
+    for mut pos in head_positions.iter_mut() {
         if keyboard_input.pressed(KeyCode::Left) {
-            transform.translation.x -= 2.;
+            pos.x -= 1;
         }
         if keyboard_input.pressed(KeyCode::Right) {
-            transform.translation.x += 2.;
+            pos.x += 1;
         }
         if keyboard_input.pressed(KeyCode::Down) {
-            transform.translation.y -= 2.;
+            pos.y -= 1;
         }
         if keyboard_input.pressed(KeyCode::Up) {
-            transform.translation.y += 2.;
+            pos.y += 1;
         }
     }
 }
