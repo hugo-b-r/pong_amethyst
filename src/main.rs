@@ -194,3 +194,6 @@ fn snake_movement(mut heads: Query<(&mut Position, &SnakeHead)>) {
         };
     }
 }
+
+#[derive(Component)]
+struct SnakeSegment;
