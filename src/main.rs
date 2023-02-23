@@ -198,3 +198,18 @@ fn snake_movement(mut heads: Query<(&mut Position, &SnakeHead)>) {
 
 #[derive(Component)]
 struct SnakeSegment;
+
+fn spawn_segment(mut commands: Commands, position: Position) -> Entity {
+    commands
+        .spawn(SpriteBundle {
+            sprite: Sprite {
+                color: SNAKE_SEGMENT_COLOR,
+                ..default()
+            },
+            ..default()
+        })
+        .insert(SnakeSegment)
+        .insert(position)
+        .insert(Size::square(0.65))
+        .id()
+}
