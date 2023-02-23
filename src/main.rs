@@ -7,6 +7,7 @@ const ARENA_HEIGHT: u32 = 10;
 
 fn main() {
     App::new().insert_resource(ClearColor(Color::rgb(0.04, 0.04, 0.04)))
+                .insert_resource(SnakeSegments::default())
                 .add_startup_system(window_size)
                 .add_startup_system(setup_camera)
                 .add_startup_system(spawn_snake)
